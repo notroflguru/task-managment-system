@@ -25,7 +25,7 @@ public class TaskService {
         try {
             return taskRepository.findTaskById(id);
         } catch (NoSuchElementException nse) {
-            log.error("Caught NoSuchElementException", nse.getMessage());
+            log.error("Caught NoSuchElementException: {}", nse.getMessage());
             return null;
         }
     }
@@ -34,9 +34,17 @@ public class TaskService {
         try {
             return taskRepository.findAll();
         } catch (IllegalArgumentException iae) {
-            log.error("Caught IllegalArgumentException", iae.getMessage());
+            log.error("Caught IllegalArgumentException: {}", iae.getMessage());
             return null;
         }
     }
 
+    public Task createTask(Task task) {
+        try {
+            return taskRepository.createTask(task);
+        } catch (Exception e) {
+            log.error("Caught exception: {}", e.getMessage());
+            return null;
+        }
+    }
 }

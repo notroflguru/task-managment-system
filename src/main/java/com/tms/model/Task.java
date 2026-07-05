@@ -58,4 +58,8 @@ public class Task {
         return priority;
     }
 
+    // Сеттеры
+    public void setId(Long newId) {
+        this.id = newId;
+    }
 }

@@ -5,10 +5,9 @@ import com.tms.service.TaskService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -34,8 +33,15 @@ public class TaskController {
     public Task findTaskById(
             @PathVariable("id") Long id
     ) {
-        log.info("Вызван поиск задачи по id = {}", id);
+        log.info("Вызван метод findTaskById по id = {}", id);
         return taskService.findTaskById(id);
     }
 
+    @PostMapping()
+    public ResponseEntity<Task> createTask(
+            @RequestBody Task task
+    ) {
+        log.info("Вызван метод createTask");
+        return ResponseEntity.status(HttpStatus.CREATED).body(taskService.createTask(task));
+    }
 }

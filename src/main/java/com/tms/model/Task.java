@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.time.LocalDateTime;
 
 public class Task {
+
     public enum Status {
         CREATED, ASSIGNED, IN_PROGRESS, DONE
     }
@@ -20,7 +21,6 @@ public class Task {
     private LocalDateTime deadline;
     private Priority priority;
 
-    @Autowired
     public Task(Long id, String taskDescription, Long creatorId, Long assignedUserId, Status status, LocalDateTime createDateTime, LocalDateTime deadline, Priority priority) {
         this.id = id;
         this.taskDescription = taskDescription;
@@ -61,5 +61,8 @@ public class Task {
     // Сеттеры
     public void setId(Long newId) {
         this.id = newId;
+    }
+    public void setStatus(Status status) {
+        this.status = status;
     }
 }

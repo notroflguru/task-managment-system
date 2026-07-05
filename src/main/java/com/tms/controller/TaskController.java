@@ -1,5 +1,7 @@
 package com.tms.controller;
 
+import com.tms.dto.ChangeTaskStatusRequest;
+import com.tms.dto.CreateTaskRequest;
 import com.tms.model.Task;
 import com.tms.service.TaskService;
 import org.slf4j.Logger;
@@ -24,24 +26,48 @@ public class TaskController {
     }
 
     @GetMapping
-    public List<Task> findAll() {
+    public ResponseEntity<?> findAll() {
         log.info("Вызван метод findAll()");
-        return taskService.findAll();
+        List<Task> taskList = taskService.findAll();
+        if (taskList.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(taskList);
     }
 
     @GetMapping("/{id}")
-    public Task findTaskById(
+    public ResponseEntity<Task> findTaskById(
             @PathVariable("id") Long id
     ) {
         log.info("Вызван метод findTaskById по id = {}", id);
-        return taskService.findTaskById(id);
+        return ResponseEntity.status(HttpStatus.OK).body(taskService.findTaskById(id));
     }
 
     @PostMapping()
     public ResponseEntity<Task> createTask(
-            @RequestBody Task task
-    ) {
+            @RequestBody CreateTaskRequest request
+            ) {
         log.info("Вызван метод createTask");
-        return ResponseEntity.status(HttpStatus.CREATED).body(taskService.createTask(task));
+        Task newTask = new Task(null, request.getTaskDescription(), request.getCreatorId(),
+                request.getAssignedUserId(), null, request.getCreateDateTime(), request.getDeadline(), request.getPriority());
+        return ResponseEntity.status(HttpStatus.CREATED).body(taskService.createTask(newTask));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Task> changeTaskStatus(
+            @PathVariable Long id,
+            @RequestBody ChangeTaskStatusRequest request
+        ) {
+        log.info("Вызван метод changeTaskStatus");
+        return ResponseEntity.status(HttpStatus.OK).body(taskService.changeTaskStatus(id, request.getStatus()));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteTaskById(
+            @PathVariable("id") Long id
+    ) {
+        log.info("Вызван метод deleteTaskById");
+        taskService.deleteTaskById(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
     }
 }

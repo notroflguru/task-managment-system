@@ -13,7 +13,6 @@ import java.util.NoSuchElementException;
 @Service
 public class TaskService {
 
-    private static final Logger log = LoggerFactory.getLogger(TaskService.class);
     private final TaskRepository taskRepository;
 
     @Autowired
@@ -22,29 +21,29 @@ public class TaskService {
     }
 
     public Task findTaskById(Long id) {
-        try {
-            return taskRepository.findTaskById(id);
-        } catch (NoSuchElementException nse) {
-            log.error("Caught NoSuchElementException: {}", nse.getMessage());
-            return null;
-        }
+        return taskRepository.findTaskById(id)
+                .orElseThrow(() -> new NoSuchElementException("Task with id " + id + " was not found"));
     }
 
     public List<Task> findAll() {
-        try {
-            return taskRepository.findAll();
-        } catch (IllegalArgumentException iae) {
-            log.error("Caught IllegalArgumentException: {}", iae.getMessage());
-            return null;
-        }
+        return taskRepository.findAll();
     }
 
     public Task createTask(Task task) {
-        try {
-            return taskRepository.createTask(task);
-        } catch (Exception e) {
-            log.error("Caught exception: {}", e.getMessage());
-            return null;
+        return taskRepository.createTask(task);
+    }
+
+    public Task changeTaskStatus(Long id, Task.Status status) {
+        if (taskRepository.findTaskById(id).isEmpty()) {
+            throw new NoSuchElementException("Task with id " + id + " does not exist");
         }
+        return taskRepository.changeTaskStatus(id, status);
+    }
+
+    public void deleteTaskById(Long id) {
+        if (taskRepository.findTaskById(id).isEmpty()) {
+            throw new NoSuchElementException("Task with id " + id + " does not exist");
+        }
+        taskRepository.deleteTaskById(id);
     }
 }

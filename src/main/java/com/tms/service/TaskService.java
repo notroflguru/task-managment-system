@@ -1,10 +1,11 @@
 package com.tms.service;
 
 import com.tms.dto.CreateTaskRequest;
+import com.tms.mapper.TaskMapper;
+import com.tms.model.Status;
 import com.tms.model.Task;
+import com.tms.model.TaskEntity;
 import com.tms.repository.TaskRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,38 +17,42 @@ import java.util.NoSuchElementException;
 public class TaskService {
 
     private final TaskRepository taskRepository;
+    private final TaskMapper taskMapper;
 
     @Autowired
-    public TaskService (TaskRepository taskRepository) {
+    public TaskService (TaskRepository taskRepository, TaskMapper taskMapper) {
         this.taskRepository = taskRepository;
+        this.taskMapper = taskMapper;
     }
 
     public Task findTaskById(Long id) {
-        return taskRepository.findTaskById(id)
-                .orElseThrow(() -> new NoSuchElementException("Task with id " + id + " was not found"));
+        TaskEntity entity = taskRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Task with id = " + id + " not found"));
+        return taskMapper.toDomain(entity);
     }
 
     public List<Task> findAll() {
-        return taskRepository.findAll();
+        return taskMapper.toDomainList(taskRepository.findAll());
     }
 
     public Task createTask(CreateTaskRequest request) {
         Task newTask = new Task(null, request.getTaskDescription(), request.getCreatorId(),
-                request.getAssignedUserId(), null, LocalDateTime.now(), request.getDeadline(), request.getPriority());
-        return taskRepository.createTask(newTask);
+                request.getAssignedUserId(), Status.CREATED, LocalDateTime.now(), request.getDeadline(), request.getPriority());
+        Task resTask = taskMapper.toDomain(taskRepository.save(taskMapper.toEntity(newTask)));
+        return resTask;
     }
 
-    public Task changeTaskStatus(Long id, Task.Status status) {
-        if (taskRepository.findTaskById(id).isEmpty()) {
+    public Task changeTaskStatus(Long id, Status status) {
+        if (taskRepository.findById(id).isEmpty()) {
             throw new NoSuchElementException("Task with id " + id + " does not exist");
         }
-        return taskRepository.changeTaskStatus(id, status);
+        int res = taskRepository.updateStatusById(id, status);
+        if (res==1) {return findTaskById(id);} else {return null;}
     }
 
     public void deleteTaskById(Long id) {
-        if (taskRepository.findTaskById(id).isEmpty()) {
+        if (taskRepository.findById(id).isEmpty()) {
             throw new NoSuchElementException("Task with id " + id + " does not exist");
         }
-        taskRepository.deleteTaskById(id);
+        taskRepository.deleteById(id);
     }
 }

@@ -1,6 +1,6 @@
 package com.tms.dto;
 
-import com.tms.model.Task;
+import com.tms.model.Priority;
 
 import java.time.LocalDateTime;
 
@@ -10,7 +10,7 @@ public class CreateTaskRequest {
     private Long creatorId;
     private Long assignedUserId;
     private LocalDateTime deadline;
-    private Task.Priority priority;
+    private Priority priority;
 
     // Геттеры
     public String getTaskDescription() {
@@ -25,7 +25,7 @@ public class CreateTaskRequest {
     public LocalDateTime getDeadline() {
         return deadline;
     }
-    public Task.Priority getPriority() {
+    public Priority getPriority() {
         return priority;
     }
 
@@ -43,7 +43,7 @@ public class CreateTaskRequest {
     public void setDeadline(LocalDateTime deadline) {
         this.deadline = deadline;
     }
-    public void setPriority(Task.Priority priority) {
+    public void setPriority(Priority priority) {
         this.priority = priority;
     }
 

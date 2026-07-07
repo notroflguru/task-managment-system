@@ -6,12 +6,6 @@ import java.time.LocalDateTime;
 
 public class Task {
 
-    public enum Status {
-        CREATED, ASSIGNED, IN_PROGRESS, DONE
-    }
-    public enum Priority {
-        LOW, MEDIUM, HIGH
-    }
     private Long id;
     private String taskDescription;
     private Long creatorId;

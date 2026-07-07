@@ -9,7 +9,6 @@ public class CreateTaskRequest {
     private String taskDescription;
     private Long creatorId;
     private Long assignedUserId;
-    private LocalDateTime createDateTime;
     private LocalDateTime deadline;
     private Task.Priority priority;
 
@@ -22,9 +21,6 @@ public class CreateTaskRequest {
     }
     public Long getAssignedUserId() {
         return assignedUserId;
-    }
-    public LocalDateTime getCreateDateTime() {
-        return createDateTime;
     }
     public LocalDateTime getDeadline() {
         return deadline;
@@ -43,9 +39,6 @@ public class CreateTaskRequest {
     }
     public void setAssignedUserId(Long assignedUserId) {
         this.assignedUserId = assignedUserId;
-    }
-    public void setCreateDateTime(LocalDateTime createDateTime) {
-        this.createDateTime = createDateTime;
     }
     public void setDeadline(LocalDateTime deadline) {
         this.deadline = deadline;

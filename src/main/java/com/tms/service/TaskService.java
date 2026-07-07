@@ -1,5 +1,6 @@
 package com.tms.service;
 
+import com.tms.dto.CreateTaskRequest;
 import com.tms.model.Task;
 import com.tms.repository.TaskRepository;
 import org.slf4j.Logger;
@@ -7,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -29,8 +31,10 @@ public class TaskService {
         return taskRepository.findAll();
     }
 
-    public Task createTask(Task task) {
-        return taskRepository.createTask(task);
+    public Task createTask(CreateTaskRequest request) {
+        Task newTask = new Task(null, request.getTaskDescription(), request.getCreatorId(),
+                request.getAssignedUserId(), null, LocalDateTime.now(), request.getDeadline(), request.getPriority());
+        return taskRepository.createTask(newTask);
     }
 
     public Task changeTaskStatus(Long id, Task.Status status) {

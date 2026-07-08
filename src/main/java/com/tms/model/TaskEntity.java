@@ -1,7 +1,6 @@
 package com.tms.model;
 
 import jakarta.persistence.*;
-
 import java.time.LocalDateTime;
 
 @Table(name = "tasks")
@@ -69,9 +68,6 @@ public class TaskEntity {
 
     // Сеттеры
 
-    public void setId(Long id) {
-        this.id = id;
-    }
     public void setTaskDescription(String taskDescription) {
         this.taskDescription = taskDescription;
     }

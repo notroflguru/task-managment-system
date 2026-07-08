@@ -37,16 +37,17 @@ public class TaskService {
     public Task createTask(CreateTaskRequest request) {
         Task newTask = new Task(null, request.getTaskDescription(), request.getCreatorId(),
                 request.getAssignedUserId(), Status.CREATED, LocalDateTime.now(), request.getDeadline(), request.getPriority());
-        Task resTask = taskMapper.toDomain(taskRepository.save(taskMapper.toEntity(newTask)));
+        TaskEntity entity = taskRepository.save(taskMapper.toEntity(newTask));
+        Task resTask = taskMapper.toDomain(entity);
         return resTask;
     }
 
     public Task changeTaskStatus(Long id, Status status) {
-        if (taskRepository.findById(id).isEmpty()) {
-            throw new NoSuchElementException("Task with id " + id + " does not exist");
-        }
-        int res = taskRepository.updateStatusById(id, status);
-        if (res==1) {return findTaskById(id);} else {return null;}
+        TaskEntity entity = taskRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("Task with id " + id + " does not exist"));
+        entity.setStatus(status);
+        taskRepository.save(entity);
+        return taskMapper.toDomain(entity);
     }
 
     public void deleteTaskById(Long id) {

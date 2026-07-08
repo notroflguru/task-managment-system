@@ -27,7 +27,7 @@ public class TaskController {
 
     @GetMapping
     public ResponseEntity<?> findAll() {
-        log.info("Вызван метод findAll()");
+        log.info("TaskController: Вызван метод findAll()");
         List<Task> taskList = taskService.findAll();
         if (taskList.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
@@ -39,7 +39,7 @@ public class TaskController {
     public ResponseEntity<Task> findTaskById(
             @PathVariable("id") Long id
     ) {
-        log.info("Вызван метод findTaskById; id = {}", id);
+        log.info("TaskController: Вызван метод findTaskById; id = {}", id);
         return ResponseEntity.status(HttpStatus.OK).body(taskService.findTaskById(id));
     }
 
@@ -47,7 +47,7 @@ public class TaskController {
     public ResponseEntity<Task> createTask(
             @RequestBody CreateTaskRequest request
             ) {
-        log.info("Вызван метод createTask");
+        log.info("TaskController: Вызван метод createTask");
         return ResponseEntity.status(HttpStatus.CREATED).body(taskService.createTask(request));
     }
 
@@ -56,7 +56,7 @@ public class TaskController {
             @PathVariable Long id,
             @RequestBody ChangeTaskStatusRequest request
         ) {
-        log.info("Вызван метод changeTaskStatus; id = {}", id);
+        log.info("TaskController: Вызван метод changeTaskStatus; id = {}", id);
         return ResponseEntity.status(HttpStatus.OK).body(taskService.changeTaskStatus(id, request.getStatus()));
     }
 
@@ -64,7 +64,7 @@ public class TaskController {
     public ResponseEntity<Void> deleteTaskById(
             @PathVariable("id") Long id
     ) {
-        log.info("Вызван метод deleteTaskById; id = {}", id);
+        log.info("TaskController: Вызван метод deleteTaskById; id = {}", id);
         taskService.deleteTaskById(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
     }

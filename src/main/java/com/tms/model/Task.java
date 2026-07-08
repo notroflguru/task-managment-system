@@ -1,7 +1,5 @@
 package com.tms.model;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import java.time.LocalDateTime;
 
 public class Task {

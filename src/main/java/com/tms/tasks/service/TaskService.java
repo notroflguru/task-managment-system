@@ -1,6 +1,7 @@
 package com.tms.tasks.service;
 
 import com.tms.tasks.dto.CreateTaskRequest;
+import com.tms.tasks.dto.UpdateTaskRequest;
 import com.tms.tasks.mapper.TaskMapper;
 import com.tms.tasks.model.Status;
 import com.tms.tasks.model.Task;
@@ -42,10 +43,24 @@ public class TaskService {
         return resTask;
     }
 
-    public Task changeTaskStatus(Long id, Status status) {
+    public Task updateTask(Long id, UpdateTaskRequest request) {
         TaskEntity entity = taskRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("Task with id " + id + " does not exist"));
-        entity.setStatus(status);
+        if (request.getDeadline() != null) {
+            entity.setDeadline(request.getDeadline());
+        }
+        if (request.getPriority() != null) {
+            entity.setPriority(request.getPriority());
+        }
+        if (request.getStatus() != null) {
+            entity.setStatus(request.getStatus());
+        }
+        if (request.getTaskDescription() != null) {
+            entity.setTaskDescription(request.getTaskDescription());
+        }
+        if (request.getAssignedUserId() != null) {
+            entity.setAssignedUserId(request.getAssignedUserId());
+        }
         taskRepository.save(entity);
         return taskMapper.toDomain(entity);
     }

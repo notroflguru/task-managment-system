@@ -1,6 +1,6 @@
 package com.tms.tasks.controller;
 
-import com.tms.tasks.dto.ChangeTaskStatusRequest;
+import com.tms.tasks.dto.UpdateTaskRequest;
 import com.tms.tasks.dto.CreateTaskRequest;
 import com.tms.tasks.model.Task;
 import com.tms.tasks.service.TaskService;
@@ -51,13 +51,13 @@ public class TaskController {
         return ResponseEntity.status(HttpStatus.CREATED).body(taskService.createTask(request));
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Task> changeTaskStatus(
+    @PatchMapping("/{id}")
+    public ResponseEntity<Task> updateTask(
             @PathVariable Long id,
-            @RequestBody ChangeTaskStatusRequest request
+            @RequestBody UpdateTaskRequest request
         ) {
-        log.info("TaskController: Вызван метод changeTaskStatus; id = {}", id);
-        return ResponseEntity.status(HttpStatus.OK).body(taskService.changeTaskStatus(id, request.getStatus()));
+        log.info("TaskController: Вызван метод updateTask; id = {}", id);
+        return ResponseEntity.status(HttpStatus.OK).body(taskService.updateTask(id, request));
     }
 
     @DeleteMapping("/{id}")

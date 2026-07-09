@@ -1,6 +1,7 @@
 package com.tms.tasks.service;
 
 import com.tms.tasks.dto.CreateTaskRequest;
+import com.tms.tasks.dto.TaskResponse;
 import com.tms.tasks.dto.UpdateTaskRequest;
 import com.tms.tasks.mapper.TaskMapper;
 import com.tms.tasks.model.Status;
@@ -26,24 +27,23 @@ public class TaskService {
         this.taskMapper = taskMapper;
     }
 
-    public Task findTaskById(Long id) {
+    public TaskResponse findTaskById(Long id) {
         TaskEntity entity = taskRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Task with id = " + id + " not found"));
-        return taskMapper.toDomain(entity);
+        return taskMapper.toResponse(entity);
     }
 
     public List<Task> findAll() {
         return taskMapper.toDomainList(taskRepository.findAll());
     }
 
-    public Task createTask(CreateTaskRequest request) {
+    public TaskResponse createTask(CreateTaskRequest request) {
         Task newTask = new Task(null, request.getTaskDescription(), request.getCreatorId(),
                 request.getAssignedUserId(), Status.CREATED, LocalDateTime.now(), request.getDeadline(), request.getPriority());
         TaskEntity entity = taskRepository.save(taskMapper.toEntity(newTask));
-        Task resTask = taskMapper.toDomain(entity);
-        return resTask;
+        return taskMapper.toResponse(entity);
     }
 
-    public Task updateTask(Long id, UpdateTaskRequest request) {
+    public TaskResponse updateTask(Long id, UpdateTaskRequest request) {
         TaskEntity entity = taskRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("Task with id " + id + " does not exist"));
         if (request.getDeadline() != null) {
@@ -61,8 +61,7 @@ public class TaskService {
         if (request.getAssignedUserId() != null) {
             entity.setAssignedUserId(request.getAssignedUserId());
         }
-        taskRepository.save(entity);
-        return taskMapper.toDomain(entity);
+        return taskMapper.toResponse(taskRepository.save(entity));
     }
 
     public void deleteTaskById(Long id) {

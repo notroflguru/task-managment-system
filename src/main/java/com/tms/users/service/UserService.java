@@ -2,6 +2,7 @@ package com.tms.users.service;
 
 import com.tms.users.dto.CreateUserRequest;
 import com.tms.users.dto.UpdateUserRequest;
+import com.tms.users.dto.UserResponse;
 import com.tms.users.mapper.UserMapper;
 import com.tms.users.model.User;
 import com.tms.users.model.UserEntity;
@@ -22,11 +23,10 @@ public class UserService {
         this.userMapper = userMapper;
     }
 
-    public User createUser(CreateUserRequest request) {
+    public UserResponse createUser(CreateUserRequest request) {
         User newUser = new User(null, request.getLogin(), request.getPasswordHash(), request.getEmail(), request.getName(), request.getRole());
         UserEntity entity = userRepository.save(userMapper.toEntity(newUser));
-        User resUser = userMapper.toDomain(entity);
-        return resUser;
+        return userMapper.toResponse(entity);
     }
 
     public List<User> findAll() {
@@ -34,9 +34,9 @@ public class UserService {
         return userMapper.toDomainList(userEntityList);
     }
 
-    public User findUserById(Long id) {
+    public UserResponse findUserById(Long id) {
         UserEntity entity = userRepository.findById(id).orElseThrow(() -> new NoSuchElementException("User with id " + id + " not found"));
-        return userMapper.toDomain(entity);
+        return userMapper.toResponse(entity);
     }
 
     public void deleteUserById(Long id) {
@@ -46,7 +46,7 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
-    public User changeUser(Long id, UpdateUserRequest request) {
+    public UserResponse changeUser(Long id, UpdateUserRequest request) {
         UserEntity entity = userRepository.findById(id).orElseThrow(() -> new NoSuchElementException("User with id " + id + " not found"));
         if (request.getName() != null) {
             entity.setName(request.getName());
@@ -63,6 +63,6 @@ public class UserService {
         if (request.getRole() != null) {
             entity.setRole(request.getRole());
         }
-        return userMapper.toDomain(userRepository.save(entity));
+        return userMapper.toResponse(userRepository.save(entity));
     }
 }

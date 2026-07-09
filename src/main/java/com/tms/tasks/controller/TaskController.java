@@ -1,5 +1,6 @@
 package com.tms.tasks.controller;
 
+import com.tms.tasks.dto.TaskResponse;
 import com.tms.tasks.dto.UpdateTaskRequest;
 import com.tms.tasks.dto.CreateTaskRequest;
 import com.tms.tasks.model.Task;
@@ -36,7 +37,7 @@ public class TaskController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Task> findTaskById(
+    public ResponseEntity<TaskResponse> findTaskById(
             @PathVariable("id") Long id
     ) {
         log.info("TaskController: Вызван метод findTaskById; id = {}", id);
@@ -44,7 +45,7 @@ public class TaskController {
     }
 
     @PostMapping()
-    public ResponseEntity<Task> createTask(
+    public ResponseEntity<TaskResponse> createTask(
             @RequestBody CreateTaskRequest request
             ) {
         log.info("TaskController: Вызван метод createTask");
@@ -52,7 +53,7 @@ public class TaskController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Task> updateTask(
+    public ResponseEntity<TaskResponse> updateTask(
             @PathVariable Long id,
             @RequestBody UpdateTaskRequest request
         ) {

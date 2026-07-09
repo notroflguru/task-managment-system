@@ -10,14 +10,19 @@ public class UserEntity {
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(name = "login")
     private String login;
+
     @Column(name = "password_hash")
     private String passwordHash;
+
     @Column(name = "email")
     private String email;
+
     @Column(name = "name")
     private String name;
+
     @Column(name = "role")
     private Role role;
 

@@ -2,6 +2,7 @@ package com.tms.users.controller;
 
 import com.tms.users.dto.CreateUserRequest;
 import com.tms.users.dto.UpdateUserRequest;
+import com.tms.users.dto.UserResponse;
 import com.tms.users.model.User;
 import com.tms.users.service.UserService;
 import org.slf4j.Logger;
@@ -24,11 +25,11 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<User> createUser(
+    public ResponseEntity<UserResponse> createUser(
             @RequestBody CreateUserRequest request
             ) {
         log.info("UserController: Вызван метод createUser");
-        return ResponseEntity.status(HttpStatus.OK).body(userService.createUser(request));
+        return ResponseEntity.status(HttpStatus.CREATED).body(userService.createUser(request));
     }
 
     @GetMapping
@@ -42,7 +43,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> findUserById(
+    public ResponseEntity<UserResponse> findUserById(
             @PathVariable("id") Long id
     ) {
         log.info("UserController: Вызван метод findUserById; id = {}", id);
@@ -59,7 +60,7 @@ public class UserController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<User> updateUserById(
+    public ResponseEntity<UserResponse> updateUserById(
             @PathVariable("id") Long id,
             @RequestBody UpdateUserRequest request
     ) {

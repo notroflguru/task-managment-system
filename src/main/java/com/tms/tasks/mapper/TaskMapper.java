@@ -1,5 +1,6 @@
 package com.tms.tasks.mapper;
 
+import com.tms.tasks.dto.TaskResponse;
 import com.tms.tasks.model.Task;
 import com.tms.tasks.model.TaskEntity;
 import org.springframework.stereotype.Component;
@@ -36,5 +37,17 @@ public class TaskMapper {
 
     public List<Task> toDomainList(List<TaskEntity> entities) {
         return entities.stream().map(this::toDomain).collect(Collectors.toList());
+    }
+
+    public TaskResponse toResponse(TaskEntity entity) {
+        TaskResponse response = new TaskResponse();
+        response.setAssignedUserId(entity.getAssignedUserId());
+        response.setCreateDateTime(entity.getCreateDateTime());
+        response.setDeadline(entity.getDeadline());
+        response.setPriority(entity.getPriority());
+        response.setStatus(entity.getStatus());
+        response.setTaskDescription(entity.getTaskDescription());
+        response.setCreatorId(entity.getCreatorId());
+        return response;
     }
 }

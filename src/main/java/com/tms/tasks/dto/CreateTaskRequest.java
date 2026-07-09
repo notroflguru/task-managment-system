@@ -1,6 +1,6 @@
-package com.tms.dto;
+package com.tms.tasks.dto;
 
-import com.tms.model.Priority;
+import com.tms.tasks.model.Priority;
 
 import java.time.LocalDateTime;
 

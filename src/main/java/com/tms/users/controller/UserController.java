@@ -1,8 +1,8 @@
-package com.tms.controller;
+package com.tms.users.controller;
 
-import com.tms.dto.CreateUserRequest;
-import com.tms.model.User;
-import com.tms.service.UserService;
+import com.tms.users.dto.CreateUserRequest;
+import com.tms.users.model.User;
+import com.tms.users.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;

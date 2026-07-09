@@ -1,30 +1,16 @@
-package com.tms.model;
+package com.tms.users.model;
 
-import jakarta.persistence.*;
 
-@Table(name = "users")
-@Entity
-public class UserEntity {
+public class User {
 
-    @Id
-    @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "login")
     private String login;
-    @Column(name = "password_hash")
     private String passwordHash;
-    @Column(name = "email")
     private String email;
-    @Column(name = "name")
     private String name;
-    @Column(name = "role")
     private Role role;
 
-    public UserEntity() {
-    }
-
-    public UserEntity(Long id, String login, String passwordHash, String email, String name, Role role) {
+    public User(Long id, String login, String passwordHash, String email, String name, Role role) {
         this.id = id;
         this.login = login;
         this.passwordHash = passwordHash;
@@ -54,6 +40,9 @@ public class UserEntity {
     }
 
     // Сеттеры
+    public void setId(Long id) {
+        this.id = id;
+    }
     public void setLogin(String login) {
         this.login = login;
     }

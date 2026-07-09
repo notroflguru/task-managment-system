@@ -1,7 +1,7 @@
-package com.tms.mapper;
+package com.tms.users.mapper;
 
-import com.tms.model.User;
-import com.tms.model.UserEntity;
+import com.tms.users.model.User;
+import com.tms.users.model.UserEntity;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

@@ -1,7 +1,7 @@
-package com.tms.mapper;
+package com.tms.tasks.mapper;
 
-import com.tms.model.Task;
-import com.tms.model.TaskEntity;
+import com.tms.tasks.model.Task;
+import com.tms.tasks.model.TaskEntity;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

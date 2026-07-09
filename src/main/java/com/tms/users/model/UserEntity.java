@@ -1,16 +1,42 @@
-package com.tms.dto;
+package com.tms.users.model;
 
-import com.tms.model.Role;
+import jakarta.persistence.*;
 
-public class CreateUserRequest {
+@Table(name = "users")
+@Entity
+public class UserEntity {
 
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @Column(name = "login")
     private String login;
+    @Column(name = "password_hash")
     private String passwordHash;
+    @Column(name = "email")
     private String email;
+    @Column(name = "name")
     private String name;
+    @Column(name = "role")
     private Role role;
 
+    public UserEntity() {
+    }
+
+    public UserEntity(Long id, String login, String passwordHash, String email, String name, Role role) {
+        this.id = id;
+        this.login = login;
+        this.passwordHash = passwordHash;
+        this.email = email;
+        this.name = name;
+        this.role = role;
+    }
+
     // Геттеры
+    public Long getId() {
+        return id;
+    }
     public String getLogin() {
         return login;
     }

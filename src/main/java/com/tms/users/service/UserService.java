@@ -1,10 +1,10 @@
-package com.tms.service;
+package com.tms.users.service;
 
-import com.tms.dto.CreateUserRequest;
-import com.tms.mapper.UserMapper;
-import com.tms.model.User;
-import com.tms.model.UserEntity;
-import com.tms.repository.UserRepository;
+import com.tms.users.dto.CreateUserRequest;
+import com.tms.users.mapper.UserMapper;
+import com.tms.users.model.User;
+import com.tms.users.model.UserEntity;
+import com.tms.users.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

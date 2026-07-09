@@ -1,4 +1,4 @@
-package com.tms.model;
+package com.tms.tasks.model;
 
 import java.time.LocalDateTime;
 

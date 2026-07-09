@@ -1,6 +1,6 @@
-package com.tms.dto;
+package com.tms.tasks.dto;
 
-import com.tms.model.Status;
+import com.tms.tasks.model.Status;
 
 public class ChangeTaskStatusRequest {
     private Status status;

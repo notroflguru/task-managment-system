@@ -1,11 +1,11 @@
-package com.tms.service;
+package com.tms.tasks.service;
 
-import com.tms.dto.CreateTaskRequest;
-import com.tms.mapper.TaskMapper;
-import com.tms.model.Status;
-import com.tms.model.Task;
-import com.tms.model.TaskEntity;
-import com.tms.repository.TaskRepository;
+import com.tms.tasks.dto.CreateTaskRequest;
+import com.tms.tasks.mapper.TaskMapper;
+import com.tms.tasks.model.Status;
+import com.tms.tasks.model.Task;
+import com.tms.tasks.model.TaskEntity;
+import com.tms.tasks.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

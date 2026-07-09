@@ -1,4 +1,4 @@
-package com.tms.model;
+package com.tms.tasks.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
@@ -8,37 +8,34 @@ import java.time.LocalDateTime;
 public class TaskEntity {
 
     @Id
-    @Column(name = "id")
+    @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "task_description")
+
+    @Column(name = "task_description", nullable = false, length=255)
     private String taskDescription;
+
     @Column(name = "creator_id")
     private Long creatorId;
+
     @Column(name = "assigned_user_id")
     private Long assignedUserId;
+
     @Column(name = "task_status")
     private Status status;
+
     @Column(name = "date_of_creation")
     private LocalDateTime createDateTime;
+
     @Column(name = "deadline")
     private LocalDateTime deadline;
+
     @Column(name = "priority")
     private Priority priority;
 
     public TaskEntity() {
     }
 
-    public TaskEntity(Long id, String taskDescription, Long creatorId, Long assignedUserId, Status status, LocalDateTime createDateTime, LocalDateTime deadline, Priority priority) {
-        this.id = id;
-        this.taskDescription = taskDescription;
-        this.creatorId = creatorId;
-        this.assignedUserId = assignedUserId;
-        this.status = status;
-        this.createDateTime = createDateTime;
-        this.deadline = deadline;
-        this.priority = priority;
-    }
 
     // Геттеры
     public Long getId() {

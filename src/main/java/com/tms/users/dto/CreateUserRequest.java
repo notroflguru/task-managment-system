@@ -1,28 +1,16 @@
-package com.tms.model;
+package com.tms.users.dto;
 
+import com.tms.users.model.Role;
 
-public class User {
+public class CreateUserRequest {
 
-    private Long id;
     private String login;
     private String passwordHash;
     private String email;
     private String name;
     private Role role;
 
-    public User(Long id, String login, String passwordHash, String email, String name, Role role) {
-        this.id = id;
-        this.login = login;
-        this.passwordHash = passwordHash;
-        this.email = email;
-        this.name = name;
-        this.role = role;
-    }
-
     // Геттеры
-    public Long getId() {
-        return id;
-    }
     public String getLogin() {
         return login;
     }
@@ -40,9 +28,6 @@ public class User {
     }
 
     // Сеттеры
-    public void setId(Long id) {
-        this.id = id;
-    }
     public void setLogin(String login) {
         this.login = login;
     }

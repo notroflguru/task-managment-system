@@ -1,9 +1,9 @@
-package com.tms.controller;
+package com.tms.tasks.controller;
 
-import com.tms.dto.ChangeTaskStatusRequest;
-import com.tms.dto.CreateTaskRequest;
-import com.tms.model.Task;
-import com.tms.service.TaskService;
+import com.tms.tasks.dto.ChangeTaskStatusRequest;
+import com.tms.tasks.dto.CreateTaskRequest;
+import com.tms.tasks.model.Task;
+import com.tms.tasks.service.TaskService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

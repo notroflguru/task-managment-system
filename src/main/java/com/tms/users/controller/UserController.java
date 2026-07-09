@@ -1,6 +1,7 @@
 package com.tms.users.controller;
 
 import com.tms.users.dto.CreateUserRequest;
+import com.tms.users.dto.UpdateUserRequest;
 import com.tms.users.model.User;
 import com.tms.users.service.UserService;
 import org.slf4j.Logger;
@@ -32,7 +33,7 @@ public class UserController {
 
     @GetMapping
     public ResponseEntity<List<User>> findAll() {
-        log.info("UserController: Вызван метод findAll()");
+        log.info("UserController: Вызван метод findAll");
         List<User> userList = userService.findAll();
         if (userList.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
@@ -44,7 +45,25 @@ public class UserController {
     public ResponseEntity<User> findUserById(
             @PathVariable("id") Long id
     ) {
-        log.info("UserController: Вызван метод findUserById");
+        log.info("UserController: Вызван метод findUserById; id = {}", id);
         return ResponseEntity.status(HttpStatus.OK).body(userService.findUserById(id));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteUserById(
+            @PathVariable("id") Long id
+    ) {
+        log.info("UserController: Вызван метод deleteUserById; id = {}", id);
+        userService.deleteUserById(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<User> updateUserById(
+            @PathVariable("id") Long id,
+            @RequestBody UpdateUserRequest request
+    ) {
+        log.info("UserController: Вызван метод changeUserById; id = {}", id);
+        return ResponseEntity.status(HttpStatus.OK).body(userService.changeUser(id, request));
     }
 }

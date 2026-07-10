@@ -27,13 +27,10 @@ public class TaskController {
     }
 
     @GetMapping
-    public ResponseEntity<?> findAll() {
+    public ResponseEntity<List<TaskResponse>> findAll() {
         log.info("TaskController: Вызван метод findAll()");
-        List<Task> taskList = taskService.findAll();
-        if (taskList.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
-        }
-        return ResponseEntity.status(HttpStatus.OK).body(taskList);
+        List<TaskResponse> taskList = taskService.findAll();
+        return ResponseEntity.ok(taskList);
     }
 
     @GetMapping("/{id}")
@@ -41,7 +38,7 @@ public class TaskController {
             @PathVariable("id") Long id
     ) {
         log.info("TaskController: Вызван метод findTaskById; id = {}", id);
-        return ResponseEntity.status(HttpStatus.OK).body(taskService.findTaskById(id));
+        return ResponseEntity.ok(taskService.findTaskById(id));
     }
 
     @PostMapping()
@@ -58,7 +55,7 @@ public class TaskController {
             @RequestBody UpdateTaskRequest request
         ) {
         log.info("TaskController: Вызван метод updateTask; id = {}", id);
-        return ResponseEntity.status(HttpStatus.OK).body(taskService.updateTask(id, request));
+        return ResponseEntity.ok(taskService.updateTask(id, request));
     }
 
     @DeleteMapping("/{id}")

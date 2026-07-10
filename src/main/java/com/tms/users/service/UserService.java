@@ -15,8 +15,8 @@ import java.util.NoSuchElementException;
 @Service
 public class UserService {
 
-    private UserRepository userRepository;
-    private UserMapper userMapper;
+    private final UserRepository userRepository;
+    private final UserMapper userMapper;
 
     public UserService(UserRepository userRepository, UserMapper userMapper) {
         this.userRepository = userRepository;
@@ -24,14 +24,14 @@ public class UserService {
     }
 
     public UserResponse createUser(CreateUserRequest request) {
-        User newUser = new User(null, request.getLogin(), request.getPasswordHash(), request.getEmail(), request.getName(), request.getRole());
+        User newUser = userMapper.toDomain(request);
         UserEntity entity = userRepository.save(userMapper.toEntity(newUser));
         return userMapper.toResponse(entity);
     }
 
-    public List<User> findAll() {
+    public List<UserResponse> findAll() {
         List<UserEntity> userEntityList = userRepository.findAll();
-        return userMapper.toDomainList(userEntityList);
+        return userMapper.toResponseList(userEntityList);
     }
 
     public UserResponse findUserById(Long id) {
@@ -46,7 +46,7 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
-    public UserResponse changeUser(Long id, UpdateUserRequest request) {
+    public UserResponse updateUser(Long id, UpdateUserRequest request) {
         UserEntity entity = userRepository.findById(id).orElseThrow(() -> new NoSuchElementException("User with id " + id + " not found"));
         if (request.getName() != null) {
             entity.setName(request.getName());
@@ -57,8 +57,8 @@ public class UserService {
         if (request.getLogin() != null) {
             entity.setLogin(request.getLogin());
         }
-        if (request.getPasswordHash() != null) {
-            entity.setPasswordHash(request.getPasswordHash());
+        if (request.getPassword() != null) {
+            entity.setPassword(request.getPassword());
         }
         if (request.getRole() != null) {
             entity.setRole(request.getRole());

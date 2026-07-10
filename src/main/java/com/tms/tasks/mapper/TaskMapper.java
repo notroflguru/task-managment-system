@@ -50,4 +50,8 @@ public class TaskMapper {
         response.setCreatorId(entity.getCreatorId());
         return response;
     }
+
+    public List<TaskResponse> toResponseList(List<TaskEntity> taskEntityList) {
+        return taskEntityList.stream().map(this::toResponse).collect(Collectors.toList());
+    }
 }

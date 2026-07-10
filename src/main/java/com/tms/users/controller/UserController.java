@@ -18,7 +18,7 @@ import java.util.List;
 public class UserController {
 
     private static final Logger log = LoggerFactory.getLogger(UserController.class);
-    private UserService userService;
+    private final UserService userService;
 
     public UserController(UserService userService) {
         this.userService = userService;
@@ -33,13 +33,10 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<List<User>> findAll() {
+    public ResponseEntity<List<UserResponse>> findAll() {
         log.info("UserController: Вызван метод findAll");
-        List<User> userList = userService.findAll();
-        if (userList.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
-        }
-        return ResponseEntity.status(HttpStatus.OK).body(userList);
+        List<UserResponse> userResponseList = userService.findAll();
+        return ResponseEntity.ok(userResponseList);
     }
 
     @GetMapping("/{id}")
@@ -47,7 +44,7 @@ public class UserController {
             @PathVariable("id") Long id
     ) {
         log.info("UserController: Вызван метод findUserById; id = {}", id);
-        return ResponseEntity.status(HttpStatus.OK).body(userService.findUserById(id));
+        return ResponseEntity.ok(userService.findUserById(id));
     }
 
     @DeleteMapping("/{id}")
@@ -65,6 +62,6 @@ public class UserController {
             @RequestBody UpdateUserRequest request
     ) {
         log.info("UserController: Вызван метод changeUserById; id = {}", id);
-        return ResponseEntity.status(HttpStatus.OK).body(userService.changeUser(id, request));
+        return ResponseEntity.ok(userService.updateUser(id, request));
     }
 }

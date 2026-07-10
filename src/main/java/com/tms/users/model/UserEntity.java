@@ -29,15 +29,6 @@ public class UserEntity {
     public UserEntity() {
     }
 
-    public UserEntity(Long id, String login, String passwordHash, String email, String name, Role role) {
-        this.id = id;
-        this.login = login;
-        this.passwordHash = passwordHash;
-        this.email = email;
-        this.name = name;
-        this.role = role;
-    }
-
     // Геттеры
     public Long getId() {
         return id;
@@ -62,7 +53,7 @@ public class UserEntity {
     public void setLogin(String login) {
         this.login = login;
     }
-    public void setPasswordHash(String passwordHash) {
+    public void setPassword(String passwordHash) {
         this.passwordHash = passwordHash;
     }
     public void setEmail(String email) {

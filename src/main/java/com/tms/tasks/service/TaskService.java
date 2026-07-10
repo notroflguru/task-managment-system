@@ -32,8 +32,8 @@ public class TaskService {
         return taskMapper.toResponse(entity);
     }
 
-    public List<Task> findAll() {
-        return taskMapper.toDomainList(taskRepository.findAll());
+    public List<TaskResponse> findAll() {
+        return taskMapper.toResponseList(taskRepository.findAll());
     }
 
     public TaskResponse createTask(CreateTaskRequest request) {

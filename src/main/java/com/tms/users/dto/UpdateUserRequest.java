@@ -5,7 +5,7 @@ import com.tms.users.model.Role;
 public class UpdateUserRequest {
 
     private String login;
-    private String passwordHash;
+    private String password;
     private String email;
     private String name;
     private Role role;
@@ -14,8 +14,8 @@ public class UpdateUserRequest {
     public String getLogin() {
         return login;
     }
-    public String getPasswordHash() {
-        return passwordHash;
+    public String getPassword() {
+        return password;
     }
     public String getEmail() {
         return email;
@@ -31,8 +31,8 @@ public class UpdateUserRequest {
     public void setLogin(String login) {
         this.login = login;
     }
-    public void setPasswordHash(String passwordHash) {
-        this.passwordHash = passwordHash;
+    public void setPassword(String password) {
+        this.password = password;
     }
     public void setEmail(String email) {
         this.email = email;

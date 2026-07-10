@@ -3,12 +3,14 @@ package com.tms.users.dto;
 import com.tms.users.model.Role;
 
 public class UserResponse {
+    private Long id;
     private String login;
     private String email;
     private String name;
     private Role role;
 
     // Геттеры
+    public Long getId() {return id;}
     public String getLogin() {
         return login;
     }
@@ -23,6 +25,7 @@ public class UserResponse {
     }
 
     // Сеттеры
+    public void setId(Long id) {this.id = id;}
     public void setLogin(String login) {
         this.login = login;
     }

@@ -15,22 +15,24 @@ public class TaskEntity {
     @Column(name = "task_description", nullable = false, length=255)
     private String taskDescription;
 
-    @Column(name = "creator_id")
+    @Column(name = "creator_id", nullable = false)
     private Long creatorId;
 
     @Column(name = "assigned_user_id")
     private Long assignedUserId;
 
-    @Column(name = "task_status")
+    @Enumerated(EnumType.STRING)
+    @Column(name = "task_status", nullable = false)
     private Status status;
 
-    @Column(name = "date_of_creation")
+    @Column(name = "date_of_creation", nullable = false)
     private LocalDateTime createDateTime;
 
-    @Column(name = "deadline")
+    @Column(name = "deadline", nullable = false)
     private LocalDateTime deadline;
 
-    @Column(name = "priority")
+    @Enumerated(EnumType.STRING)
+    @Column(name = "priority", nullable = false)
     private Priority priority;
 
     public TaskEntity() {
@@ -64,7 +66,6 @@ public class TaskEntity {
     }
 
     // Сеттеры
-
     public void setTaskDescription(String taskDescription) {
         this.taskDescription = taskDescription;
     }

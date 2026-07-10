@@ -1,7 +1,7 @@
 package com.tms.tasks.mapper;
 
+import com.tms.tasks.dto.CreateTaskRequest;
 import com.tms.tasks.dto.TaskResponse;
-import com.tms.tasks.model.Task;
 import com.tms.tasks.model.TaskEntity;
 import org.springframework.stereotype.Component;
 
@@ -10,37 +10,10 @@ import java.util.stream.Collectors;
 
 @Component
 public class TaskMapper {
-    public TaskEntity toEntity (Task task) {
-        TaskEntity entity = new TaskEntity();
-        entity.setTaskDescription(task.getTaskDescription());
-        entity.setCreatorId(task.getCreatorId());
-        entity.setDeadline(task.getDeadline());
-        entity.setPriority(task.getPriority());
-        entity.setStatus(task.getStatus());
-        entity.setAssignedUserId(task.getAssignedUserId());
-        entity.setCreateDateTime(task.getCreateDateTime());
-        return entity;
-    }
-
-    public Task toDomain (TaskEntity entity) {
-        return new Task(
-                entity.getId(),
-                entity.getTaskDescription(),
-                entity.getCreatorId(),
-                entity.getAssignedUserId(),
-                entity.getStatus(),
-                entity.getCreateDateTime(),
-                entity.getDeadline(),
-                entity.getPriority()
-        );
-    }
-
-    public List<Task> toDomainList(List<TaskEntity> entities) {
-        return entities.stream().map(this::toDomain).collect(Collectors.toList());
-    }
 
     public TaskResponse toResponse(TaskEntity entity) {
         TaskResponse response = new TaskResponse();
+        response.setId(entity.getId());
         response.setAssignedUserId(entity.getAssignedUserId());
         response.setCreateDateTime(entity.getCreateDateTime());
         response.setDeadline(entity.getDeadline());
@@ -52,6 +25,16 @@ public class TaskMapper {
     }
 
     public List<TaskResponse> toResponseList(List<TaskEntity> taskEntityList) {
-        return taskEntityList.stream().map(this::toResponse).collect(Collectors.toList());
+        return taskEntityList.stream().map(this::toResponse).toList();
+    }
+
+    public TaskEntity toEntity(CreateTaskRequest request) {
+        TaskEntity entity = new TaskEntity();
+        entity.setTaskDescription(request.getTaskDescription());
+        entity.setAssignedUserId(request.getAssignedUserId());
+        entity.setPriority(request.getPriority());
+        entity.setDeadline(request.getDeadline());
+        entity.setCreatorId(request.getCreatorId());
+        return entity;
     }
 }

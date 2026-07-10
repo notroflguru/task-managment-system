@@ -3,8 +3,8 @@ package com.tms.users.controller;
 import com.tms.users.dto.CreateUserRequest;
 import com.tms.users.dto.UpdateUserRequest;
 import com.tms.users.dto.UserResponse;
-import com.tms.users.model.User;
 import com.tms.users.service.UserService;
+import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -26,42 +26,42 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<UserResponse> createUser(
-            @RequestBody CreateUserRequest request
+            @Valid @RequestBody CreateUserRequest request
             ) {
-        log.info("UserController: Вызван метод createUser");
+        log.debug("UserController: Вызван метод createUser");
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.createUser(request));
     }
 
     @GetMapping
     public ResponseEntity<List<UserResponse>> findAll() {
-        log.info("UserController: Вызван метод findAll");
+        log.debug("UserController: Вызван метод findAll");
         List<UserResponse> userResponseList = userService.findAll();
         return ResponseEntity.ok(userResponseList);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserResponse> findUserById(
+    public ResponseEntity<UserResponse> findUser(
             @PathVariable("id") Long id
     ) {
-        log.info("UserController: Вызван метод findUserById; id = {}", id);
+        log.debug("UserController: Вызван метод findUserById; id = {}", id);
         return ResponseEntity.ok(userService.findUserById(id));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteUserById(
+    public ResponseEntity<Void> deleteUser(
             @PathVariable("id") Long id
     ) {
-        log.info("UserController: Вызван метод deleteUserById; id = {}", id);
+        log.debug("UserController: Вызван метод deleteUserById; id = {}", id);
         userService.deleteUserById(id);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
+        return ResponseEntity.noContent().build();
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<UserResponse> updateUserById(
+    public ResponseEntity<UserResponse> updateUser(
             @PathVariable("id") Long id,
             @RequestBody UpdateUserRequest request
     ) {
-        log.info("UserController: Вызван метод changeUserById; id = {}", id);
+        log.debug("UserController: Вызван метод changeUserById; id = {}", id);
         return ResponseEntity.ok(userService.updateUser(id, request));
     }
 }

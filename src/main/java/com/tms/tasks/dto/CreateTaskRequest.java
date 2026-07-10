@@ -1,15 +1,26 @@
 package com.tms.tasks.dto;
 
 import com.tms.tasks.model.Priority;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDateTime;
 
 public class CreateTaskRequest {
 
+    @NotBlank
     private String taskDescription;
+
+    @NotNull
     private Long creatorId;
+
+    @NotNull
     private Long assignedUserId;
+
+    @NotNull
     private LocalDateTime deadline;
+
+    @NotNull
     private Priority priority;
 
     // Геттеры

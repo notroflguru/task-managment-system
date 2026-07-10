@@ -5,7 +5,6 @@ import com.tms.tasks.dto.TaskResponse;
 import com.tms.tasks.dto.UpdateTaskRequest;
 import com.tms.tasks.mapper.TaskMapper;
 import com.tms.tasks.model.Status;
-import com.tms.tasks.model.Task;
 import com.tms.tasks.model.TaskEntity;
 import com.tms.tasks.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +20,6 @@ public class TaskService {
     private final TaskRepository taskRepository;
     private final TaskMapper taskMapper;
 
-    @Autowired
     public TaskService (TaskRepository taskRepository, TaskMapper taskMapper) {
         this.taskRepository = taskRepository;
         this.taskMapper = taskMapper;
@@ -37,9 +35,10 @@ public class TaskService {
     }
 
     public TaskResponse createTask(CreateTaskRequest request) {
-        Task newTask = new Task(null, request.getTaskDescription(), request.getCreatorId(),
-                request.getAssignedUserId(), Status.CREATED, LocalDateTime.now(), request.getDeadline(), request.getPriority());
-        TaskEntity entity = taskRepository.save(taskMapper.toEntity(newTask));
+        TaskEntity entity = taskMapper.toEntity(request);
+        entity.setStatus(Status.CREATED);
+        entity.setCreateDateTime(LocalDateTime.now());
+        taskRepository.save(entity);
         return taskMapper.toResponse(entity);
     }
 

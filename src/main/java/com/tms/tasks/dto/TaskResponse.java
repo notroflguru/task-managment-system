@@ -2,19 +2,31 @@ package com.tms.tasks.dto;
 
 import com.tms.tasks.model.Priority;
 import com.tms.tasks.model.Status;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDateTime;
 
 public class TaskResponse {
+
+    private Long id;
+
     private String taskDescription;
+
     private Long creatorId;
+
     private Long assignedUserId;
+
     private Status status;
+
     private LocalDateTime createDateTime;
+
     private LocalDateTime deadline;
+
     private Priority priority;
 
     // Геттеры
+    public Long getId() {return id;}
     public String getTaskDescription() {
         return taskDescription;
     }
@@ -38,6 +50,7 @@ public class TaskResponse {
     }
 
     // Сеттеры
+    public void setId(Long id) {this.id = id;}
     public void setTaskDescription(String taskDescription) {
         this.taskDescription = taskDescription;
     }

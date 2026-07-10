@@ -4,7 +4,6 @@ import com.tms.users.dto.CreateUserRequest;
 import com.tms.users.dto.UpdateUserRequest;
 import com.tms.users.dto.UserResponse;
 import com.tms.users.mapper.UserMapper;
-import com.tms.users.model.User;
 import com.tms.users.model.UserEntity;
 import com.tms.users.repository.UserRepository;
 import org.springframework.stereotype.Service;
@@ -24,8 +23,8 @@ public class UserService {
     }
 
     public UserResponse createUser(CreateUserRequest request) {
-        User newUser = userMapper.toDomain(request);
-        UserEntity entity = userRepository.save(userMapper.toEntity(newUser));
+        UserEntity entity = userMapper.toEntity(request);
+        userRepository.save(entity);
         return userMapper.toResponse(entity);
     }
 
@@ -58,7 +57,7 @@ public class UserService {
             entity.setLogin(request.getLogin());
         }
         if (request.getPassword() != null) {
-            entity.setPassword(request.getPassword());
+            entity.setPasswordHash(request.getPassword());
         }
         if (request.getRole() != null) {
             entity.setRole(request.getRole());

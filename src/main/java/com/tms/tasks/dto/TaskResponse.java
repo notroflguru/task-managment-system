@@ -2,8 +2,6 @@ package com.tms.tasks.dto;
 
 import com.tms.tasks.model.Priority;
 import com.tms.tasks.model.Status;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDateTime;
 

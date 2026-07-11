@@ -3,6 +3,7 @@ package com.tms.users.service;
 import com.tms.users.dto.CreateUserRequest;
 import com.tms.users.dto.UpdateUserRequest;
 import com.tms.users.dto.UserResponse;
+import com.tms.users.exception.UserNotFoundException;
 import com.tms.users.mapper.UserMapper;
 import com.tms.users.model.UserEntity;
 import com.tms.users.repository.UserRepository;
@@ -18,6 +19,10 @@ public class UserService {
     private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
     private final UserRepository userRepository;
     private final UserMapper userMapper;
+
+    private UserEntity findUser(Long id) {
+        return userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User with id " + id + " not found"));
+    }
 
     public UserService(UserRepository userRepository, UserMapper userMapper) {
         this.userRepository = userRepository;
@@ -37,19 +42,17 @@ public class UserService {
     }
 
     public UserResponse findUserById(Long id) {
-        UserEntity entity = userRepository.findById(id).orElseThrow(() -> new NoSuchElementException("User with id " + id + " not found"));
+        UserEntity entity = findUser(id);
         return userMapper.toResponse(entity);
     }
 
     public void deleteUserById(Long id) {
-        if (userRepository.findById(id).isEmpty()) {
-            throw new NoSuchElementException("User with id " + id + " not found");
-        }
-        userRepository.deleteById(id);
+        UserEntity entity = findUser(id);
+        userRepository.delete(entity);
     }
 
     public UserResponse updateUser(Long id, UpdateUserRequest request) {
-        UserEntity entity = userRepository.findById(id).orElseThrow(() -> new NoSuchElementException("User with id " + id + " not found"));
+        UserEntity entity = findUser(id);
         if (request.getName() != null) {
             entity.setName(request.getName());
         }

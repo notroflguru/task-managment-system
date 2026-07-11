@@ -13,6 +13,7 @@ public class UserMapper {
     public UserResponse toResponse(UserEntity entity) {
         UserResponse response = new UserResponse();
         response.setName(entity.getName());
+        response.setId(entity.getId());
         response.setLogin(entity.getLogin());
         response.setEmail(entity.getEmail());
         response.setRole(entity.getRole());

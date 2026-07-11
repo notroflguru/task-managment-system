@@ -6,6 +6,7 @@ import com.tms.users.dto.UserResponse;
 import com.tms.users.mapper.UserMapper;
 import com.tms.users.model.UserEntity;
 import com.tms.users.repository.UserRepository;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,6 +15,7 @@ import java.util.NoSuchElementException;
 @Service
 public class UserService {
 
+    private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
     private final UserRepository userRepository;
     private final UserMapper userMapper;
 
@@ -24,6 +26,7 @@ public class UserService {
 
     public UserResponse createUser(CreateUserRequest request) {
         UserEntity entity = userMapper.toEntity(request);
+        entity.setPasswordHash(encoder.encode(request.getPassword()));
         userRepository.save(entity);
         return userMapper.toResponse(entity);
     }

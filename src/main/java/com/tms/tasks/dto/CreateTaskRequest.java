@@ -1,26 +1,27 @@
 package com.tms.tasks.dto;
 
 import com.tms.tasks.model.Priority;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.*;
 
 import java.time.LocalDateTime;
 
 public class CreateTaskRequest {
 
-    @NotBlank
+    @NotBlank(message = "Task description should not be blank")
+    @Size(max=255, message = "Task description must not exceed 255 characters")
     private String taskDescription;
 
-    @NotNull
+    @NotNull(message = "Creator id is required")
     private Long creatorId;
 
-    @NotNull
+    @NotNull(message = "Assigned user id is required")
     private Long assignedUserId;
 
-    @NotNull
+    @NotNull(message = "Deadline is required")
+    @Future(message = "Deadline must be in future")
     private LocalDateTime deadline;
 
-    @NotNull
+    @NotNull(message = "Priority is required")
     private Priority priority;
 
     // Геттеры

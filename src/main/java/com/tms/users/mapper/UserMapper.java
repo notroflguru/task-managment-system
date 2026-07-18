@@ -30,7 +30,6 @@ public class UserMapper {
         entity.setLogin(request.getLogin());
         entity.setName(request.getName());
         entity.setRole(request.getRole());
-        entity.setPasswordHash(request.getPassword());
         return entity;
     }
 }
